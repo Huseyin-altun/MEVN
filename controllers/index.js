@@ -75,9 +75,9 @@ getUpdate = async(req, res) => {
         })
     }
 
-    const product = new Product(req.body)
-    //Veriyi kaydeder tek yonlu ilk parametre veritabanındakı kolon  $arguman grandtheequals olması gerek bakılacak
-    Product.updateOne({_id:{$gte:req.params.id}},{product},function (err, docs) {
+    
+    
+    Product.updateOne({_id:req.params.id},req.body,function (err, docs) {
         if (err){
             console.log(err)
         }
@@ -86,26 +86,6 @@ getUpdate = async(req, res) => {
             console.log("Updated Docs : ", docs);
         }
     });
-
- 
-    
-    // Postumu bu kaydetmıs olabılır yarın bakıcam
-    await  product
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                code: 0,
-                msg: 'sucess',
-              data:product
-               
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                code,
-                message: 'false',
-            })
-        })
 }
 module.exports = {
     createProduct,
